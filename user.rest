@@ -1,0 +1,27 @@
+GET http://localhost:8080
+
+// getAllUser
+###
+GET http://localhost:8080/user
+
+// register
+###
+POST http://localhost:8080/register
+Content-Type: application/json
+
+{
+    "username": "ardiansyah",
+    "gmail": "ardiansyah@gmail.com",
+    "password": "ardiansyah123",
+    "passwordCheck": "ardiansyah123"
+}
+
+// login
+###
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+    "gmail": "ardiansyah@gmail.com",
+    "password": "ardiansyah123"
+}
