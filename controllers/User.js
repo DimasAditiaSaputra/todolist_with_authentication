@@ -1,5 +1,6 @@
 import User from "../models/modelUser.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 
 const saltRounds = 10;
@@ -14,6 +15,7 @@ export const getAllUser = async (req, res) => {
   }
 };
 
+// login
 export const login = async (req, res) => {
   const { gmail, password } = req.body;
 
@@ -36,12 +38,31 @@ export const login = async (req, res) => {
     if (!match)
       return res.status(200).json({ msg: "gmail atau password salah" });
 
+    const token = jwt.sign(
+      {
+        uuid: user.uuid,
+        username: user.username,
+        gmail: user.gmail,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.JWT_EXPIRES,
+      }
+    );
+
+    req.session.token = token;
+    req.session.userId = {
+      id: user.id,
+    };
+
     return res.status(200).json({ msg: "berhasil login" });
   } catch (err) {
+    console.log(err.message);
     res.status(500).json({ msg: "Terjadi kesalahan server" });
   }
 };
 
+// Register
 export const register = async (req, res) => {
   const { username, gmail, password, passwordCheck } = req.body;
 
@@ -96,4 +117,20 @@ export const register = async (req, res) => {
     console.error(err);
     res.status(500).json({ msg: "Terjadi kesalahan server" });
   }
+};
+
+// Logout
+export const logout = (req, res) => {
+  if (!req.session) {
+    return res.status(401).json({ msg: "Tidak ada sesi aktif" });
+  }
+
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error saat logout:", err);
+      return res.status(500).json({ msg: "Gagal logout" });
+    }
+
+    return res.status(200).json({ msg: "Berhasil logout" });
+  });
 };

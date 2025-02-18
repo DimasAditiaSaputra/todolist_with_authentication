@@ -1,0 +1,11 @@
+// getAll Todo
+GET http://localhost:8080/todolist
+
+// create todo
+###
+POST http://localhost:8080/todolist
+Content-Type: application/json
+
+{
+    "task": "bersih rumah"
+}

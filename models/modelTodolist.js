@@ -14,10 +14,10 @@ const Todolist = db.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: User, // Perbaikan kesalahan 'users' menjadi 'User'
+        model: User,
         key: "id",
       },
-      onDelete: "CASCADE", // Jika user dihapus, semua task-nya ikut terhapus
+      onDelete: "CASCADE",
     },
     task: {
       type: DataTypes.STRING(255),
@@ -28,22 +28,12 @@ const Todolist = db.define(
       allowNull: false,
       defaultValue: "pending",
     },
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.literal(
-        "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
-      ),
-    },
   },
   {
     tableName: "todolist",
-    timestamps: false,
+    timestamps: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at",
   }
 );
 

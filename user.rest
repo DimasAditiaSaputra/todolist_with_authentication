@@ -25,3 +25,17 @@ Content-Type: application/json
     "gmail": "ardiansyah@gmail.com",
     "password": "ardiansyah123"
 }
+
+###
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+    "gmail": "dimasaditia@gmail.com",
+    "password": "dimasaditia123"
+}
+
+
+// LOGOUT
+###
+DELETE http://localhost:8080/logout HTTP/1.1
