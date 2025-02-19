@@ -5,12 +5,7 @@ import User from "./modelUser.js";
 const Todolist = db.define(
   "Todolist",
   {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    user_id: {
+    session_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
